@@ -1,0 +1,11 @@
+{
+  "name": "euclides-js",
+  "version": "1.0.0",
+  "description": "Euclides, obtener inverso multiplicativo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "José Pach",
+  "license": "ISC"
+}
