@@ -1,7 +1,8 @@
 const { SquareMultiply } = require('./expontiation/utils/functions');
 
-const x = 31; // base
-const a = 63; // exponente
-const n = 127; // mod
+const x = 1973*4586; // base
+const a = 1; // exponente
+const n = 8693; // mod
+
 
 console.log(SquareMultiply(x, a, n, true));

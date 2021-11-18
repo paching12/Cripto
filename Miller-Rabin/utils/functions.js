@@ -1,4 +1,5 @@
-const { SquareMultiply } = require('../../Exponenciación/expontiation/utils/functions');
+const { SquareMultiply, dec2bin } = require('../../Exponentiation/expontiation/utils/functions');
+
 const mod = (n, m) => {
     return ((n % m) + m) % m;
 };
@@ -8,7 +9,7 @@ const obtenerNDivisible2 = (n, i=0, debug=false) => {
     if (debug)
         console.log(nBin, nBin[nBin.length - 1]);
     if (nBin[nBin.length - 1] === '0') 
-        obtenerNDivisible2(n>>1, i++);
+        return obtenerNDivisible2(n>>1, ++i, debug);
     return i;
 };
 
@@ -32,7 +33,7 @@ const verificarPrimalidad = (n, a, m, k, debugg = false) => {
                 break;
             }
             else 
-            b = mod( Math.pow(b, 2), n );
+                b = SquareMultiply(a, 2, n);
         }
 
         if (debugg)
