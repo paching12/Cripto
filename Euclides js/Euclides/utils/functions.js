@@ -4,7 +4,7 @@ const mod = (n, m) => {
 
 const euclides = (divisor, dividendo, qs = []) => {
     const residuo = dividendo % divisor;
-    if (!residuo == 0) {
+    if (residuo !== 0) {
         try {
             if(Array.isArray(qs))
                qs.push(parseInt(dividendo/divisor));

@@ -1,11 +1,11 @@
 const { euclides, obtenerInversoMultiplicativo } = require('./Euclides/utils/functions');
 const { T } = require('./Euclides/constants');
 
-const divisor = 2406;
-const dividendo = 8663;
-    
+const divisor = -105;
+const dividendo = 353;
+
 const qs = euclides( divisor, dividendo );
-if(qs[qs.length - 1 ] == 1){
+if(qs[qs.length - 1 ] == 1) {
     console.log( 'Euclides qs: ', qs);
 }
 
