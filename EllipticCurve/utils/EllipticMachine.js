@@ -1,13 +1,20 @@
 const { Point } = require('./Point');
 const { euclides, obtenerInversoMultiplicativo } = require('../../Euclides js/Euclides/utils/functions');
 const { T } = require('../../Euclides js/Euclides/constants');
-const { SquareMultiply } = require('./../../Exponentiation/expontiation/utils/functions');
-const { mod } = require('./../../Miller-Rabin/utils/functions');
+const { SquareMultiply } = require('../../Exponentiation/expontiation/utils/functions');
+const { mod } = require('../../Miller-Rabin/utils/functions');
 
-class ElipticCurve {
+class EllipticCurve {
     constructor(y = null,x = null,a = null,b = null,p = null) {
       this.x = x;
       this.y = y;
+    }
+
+    static isSolveForCurve(point, a, p, debugg = false) {
+        const left = mod(SquareMultiply(point.getY, 2, p), p);
+        const right = mod(SquareMultiply(point.getX, 3, p) - a*point.getX, p);
+        if (debugg) console.log(`left ${left}, right ${right}`);
+        return left == right;
     }
 
     static addSamePoints(point1, alpha = 36, p = 353) {
@@ -93,5 +100,5 @@ class ElipticCurve {
 
 
 module.exports = {
-    ElipticCurve
+    EllipticCurve
 }
