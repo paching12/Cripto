@@ -81,6 +81,7 @@ class EllipticCurve {
     }
 
     static getInverseNumber(number, module = 1, debugg = false) {
+        if (number < 0) number = mod(number, module);
         const qs = euclides(number, module);
         
         if(qs[qs.length - 1 ] == 1) {
