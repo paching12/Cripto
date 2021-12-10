@@ -10,14 +10,27 @@ class EllipticCurve {
       this.y = y;
     }
 
+    static isThisPointAGenerator(originalPoint, sumPoints, p, debugg = false) {
+        const generator = sumPoints[sumPoints.length - 1];
+        const yNegative = mod(-originalPoint.getY, p);
+        if (debugg) console.log(`${yNegative} === ${generator.getY}`)
+        return yNegative === generator.getY;
+    }
+
     static isSolveForCurve(point, a, p, debugg = false) {
         const left = mod(SquareMultiply(point.getY, 2, p), p);
-        const right = mod(SquareMultiply(point.getX, 3, p) - a*point.getX, p);
-        if (debugg) console.log(`left ${left}, right ${right}`);
+        const right = mod(SquareMultiply(point.getX, 3, p) + a*point.getX, p);
+        if (debugg) {
+            console.log('y ', point.getY);
+            console.log('left ', SquareMultiply(point.getY, 2, p));
+            console.log('x ', point.getX);
+            console.log('right ', SquareMultiply(point.getX, 3, p))
+            console.log(`left ${left}, right ${right}`); 
+        }
         return left == right;
     }
 
-    static addSamePoints(point1, alpha = 36, p = 353) {
+    static addSamePoints(point1, alpha = -36, p = 353, debugg = false) {
         if (
             !(point1 instanceof Point)
         ) throw new Error('At least one point is not an Point instance.');
@@ -26,9 +39,10 @@ class EllipticCurve {
             const inverse = this.getInverseNumber(2*point.getY, p);
             if (!inverse) throw new Error(`${inverse} has not inverse`);
             const power = SquareMultiply(point.getX, 2, p);
-            
+            // console.log(`inverse of ${point.getY}`, inverse);
+            // console.log(`power ${point.getX}`, power);
             //console.log(`(3*(${power}) - ${a}) (${(inverse)})`);
-            return mod((3*power - a)*(inverse), p);
+            return mod((3*power + a)*(inverse), p);
         }
     
         this.lambda = getLambda(point1, alpha, p);
@@ -37,8 +51,8 @@ class EllipticCurve {
         const x3 = getX(this.lambda, point1.getX, p);
         const newPoint = new Point(x3, null);
 
-        //console.log(`lambda ${this.lambda}`);
-        //console.log(`x3 ${x3}`);
+        if (debugg) console.log(`lambda ${this.lambda}`);
+        // console.log(`x3 ${x3}`);
         
         const y3 = this.getY(this.lambda, point1, newPoint, p);
         newPoint.setY = y3;
@@ -46,7 +60,7 @@ class EllipticCurve {
         return newPoint;
     }
 
-    static addDifferentPoints(point1, point2, alpha = 36, p = 353) {
+    static addDifferentPoints(point1, point2, alpha = 36, p = 353, debugg = false) {
         if (
             !(point1 instanceof Point) ||
             !(point2 instanceof Point)
@@ -66,6 +80,7 @@ class EllipticCurve {
         };
     
         this.lambda = getLambda(point1, point2, p);
+        if (debugg) console.log('lamda:', this.lambda);
         const x3 = getX(point1, point2, this.lambda, p);
         const newPoint = new Point(x3, this.getY(this.lambda, point1, new Point(x3, null), p));
         return newPoint;
